@@ -1,0 +1,196 @@
+# Mod Key
+set $mod Mod1
+
+# Font
+font pango:Ubuntu Mono 10
+
+# Workspace names
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Gaps
+gaps inner 12
+gaps outer 8
+
+# Remove borders for select apps
+for_window [class="ghostty"] border none
+for_window [class="kitty"] border none
+for_window [class="Brave-browser"] border none
+for_window [class="Thunar"] border none
+for_window [class="Minecraft Launcher"] border none
+for_window [class="discord"] border none
+for_window [class="Whatsapp Desktop"] border none
+for_window [class="i3-frame"] border none
+
+# Autostart essentials
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id nm-applet
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
+exec --no-startup-id ghostty
+exec --no-startup-id brave-browser-stable
+exec_always --no-startup-id feh --bg-scale /home/karas/Pictures/Wallpaper/AtomicCity5.jpg
+
+# Lock screen
+bindsym $mod+x exec --no-startup-id ~/.i3/Scripts/i3lock/lockscreen.sh
+exec_always --no-startup-id xautolock -time 15 -locker "~/.i3/Scripts/i3lock/lockscreen.sh"
+exec_always --no-startup-id xss-lock --transfer-sleep-lock -- ~/.i3/Scripts/i3lock/lockscreen.sh
+
+# Internet
+exec --no-startup-id nm-applet
+
+# Refresh i3status
+set $refresh_i3status killall -SIGUSR1 i3status
+
+# Volume controls using pactl
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Mute/unmute microphone
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Brightness controls using brightnessctl
+bindsym F7 exec --no-startup-id brightnessctl set 5%- && notify-send "Brightness Down"
+bindsym F8 exec --no-startup-id brightnessctl set +5% && notify-send "Brightness Up"
+
+# Wifi Menu
+bindsym $mod+F9 exec --no-startup-id ~/.config/polybar/forest/scripts/networkmenu.sh
+
+# Terminal
+bindsym $mod+Return exec ghostty
+
+# Kill window
+bindsym $mod+Shift+q kill
+
+# Scratchpad
+bindsym $mod+Shift+Return move scratchpad
+bindsym $mod+grave scratchpad show
+
+# App launcher
+bindsym $mod+d exec rofi -show run 
+bindsym $mod+Shift+d exec /home/karas/.config/polybar/forest/scripts/powermenu.sh
+#-theme /home/karas/.config/rofi/launchers/type-6/style-9.rasi
+#bindsym $mod+Shift+d exec /home/karas/.config/rofi/custom/game-launcher.sh
+
+# Power menu (optional)
+bindsym $mod+Shift+p exec rofi -show power-menu -modi power-menu:/path/to/power-menu.sh
+
+# Screenshot
+bindsym Print exec --no-startup-id flameshot gui
+
+# Window focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+odiaeresis focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move windows
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+odiaeresis move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split orientation
+bindsym $mod+h split h
+bindsym $mod+v split v
+
+# Fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Layouts
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Floating toggle
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# Focus parent
+bindsym $mod+a focus parent
+
+# Dynamic gaps toggle
+bindsym $mod+g gaps inner all set 0; gaps outer all set 0
+bindsym $mod+Shift+g gaps inner all set 12; gaps outer all set 8
+
+# Workspaces
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# App assignment
+assign [class="Brave-browser"] $ws2
+assign [class="Rhythmbox"] $ws10
+
+# Resize mode
+mode "resize" {
+    bindsym j resize shrink width 10 px or 10 ppt
+    bindsym k resize grow height 10 px or 10 ppt
+    bindsym l resize shrink height 10 px or 10 ppt
+    bindsym semicolon resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Reload / restart / exit
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh --forest
+
+# i3bar
+#bar {
+#    status_command polybar
+#    position top
+#    tray_output none
+#    colors {
+#        background #000e1a
+#        separator #306293
+#        focused_workspace #000e1a #000e1a #385c87
+#        inactive_workspace #000e1a #000e1a #81828b
+#        urgent_workspace #0d243a #0d243a #81828b
+#    }
+#    font pango:DejaVu Sans Mono
+#}
+
