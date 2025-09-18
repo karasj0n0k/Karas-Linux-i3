@@ -1,0 +1,21 @@
+# Ghostty Configuration for Ubuntu + i3
+
+# ── Font Settings ──
+font-family = "Ubuntu Mono"
+font-size = 13
+font-family-bold = "Ubuntu Mono Bold"
+font-family-italic = "Ubuntu Mono Italic"
+
+# ── Window Appearance ──
+theme = "Dracula+"
+background-opacity = 0.5
+background-blur = 8
+window-decoration = none
+
+# ── Padding ──
+window-padding-x = 10
+window-padding-y = 10
+
+# ── Resize Behavior ──
+resize-overlay-duration = 0s
+
